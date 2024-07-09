@@ -1,0 +1,22 @@
+services:
+  postgresql_db:
+    container_name: 'postgresql_db'
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgreku09812
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  adminer:
+    depends_on:
+      - postgresql_db
+    container_name: 'adminer'
+    image: adminer:latest
+    restart: always
+    ports:
+      - protocol: tcp
+        published: 9009
+        target: 8080
